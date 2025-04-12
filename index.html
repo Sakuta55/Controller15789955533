@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>التسجيل</title>
+  <style>
+    body {
+      background-color: #0c1120;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+    }
+
+    input {
+      width: 300px;
+      padding: 15px;
+      font-size: 20px;
+      text-align: center;
+      background-color: #ccc;
+      border: none;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #2d4ed8;
+      color: red;
+      font-size: 24px;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1e3a8a;
+    }
+  </style>
+</head>
+<body>
+
+  <input type="text" id="tariffInput" placeholder="ادخل اسم التعرفة...">
+  <button onclick="checkTariff()">تسجيل</button>
+
+  <script>
+    async function checkTariff() {
+      const input = document.getElementById('tariffInput').value.trim();
+
+      try {
+        const response = await fetch('tariff.txt');
+        const text = await response.text();
+
+        const lines = text.split('\n').map(line => line.trim());
+
+        if (lines.includes(input)) {
+          window.location.href = 'success.html';
+        } else {
+          alert('اسم التعرفة غير صحيح');
+        }
+      } catch (err) {
+        alert('حدث خطأ أثناء التحقق من اسم التعرفة');
+        console.error(err);
+      }
+    }
+  </script>
+
+</body>
+</html>
